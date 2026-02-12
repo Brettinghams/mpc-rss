@@ -16,10 +16,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Command to update RSS feeds in the background
- * 
+ *
  * This command fetches all configured RSS feeds and updates the cache.
  * It can be run manually via CLI or automatically via TYPO3 Scheduler.
- * 
+ *
  * Usage:
  *   vendor/bin/typo3 mpcrss:updatefeeds
  *   vendor/bin/typo3 mpcrss:updatefeeds --clear-cache
@@ -80,7 +80,7 @@ class UpdateFeedsCommand extends Command
                 $queryBuilder->expr()->eq('deleted', $queryBuilder->createNamedParameter(0, ParameterType::INTEGER)),
                 $queryBuilder->expr()->neq('feed_url', $queryBuilder->createNamedParameter(''))
             )
-            ->groupBy('feed_url')
+            ->groupBy('feed_url', 'source_name')
             ->executeQuery()
             ->fetchAllAssociative();
 
